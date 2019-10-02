@@ -10,15 +10,14 @@ public class FrictionApplier : MonoBehaviour
     [SerializeField]
     private float m_MaxAccSide = 1.0f;
 
-    [SerializeField]
-    private float m_DebugDemandForwardSpeed = 10.0f;
-
     private Rigidbody m_Body;
+    private Engine m_Engine;
 
     // Start is called before the first frame update
     void Awake()
     {
         m_Body = GetComponent<Rigidbody>();
+        m_Engine = GetComponent<Engine>();
     }
 
     private float CalculateSecondMaxAccForward(float vf, float vs, float A)
@@ -42,12 +41,14 @@ public class FrictionApplier : MonoBehaviour
         var vf = Vector3.Dot(f, m_Body.velocity);
 
         var as_req = -vs / Time.fixedDeltaTime;
-        var af_req = (m_DebugDemandForwardSpeed - vf) / Time.fixedDeltaTime;
+        var af_req = (m_Engine.CurrEngineSpeed - vf) / Time.fixedDeltaTime;
 
         var as_actual = Mathf.Sign(as_req) * Mathf.Min(Mathf.Abs(as_req), m_MaxAccSide);
         var vs_after_as = vs + as_actual * Time.fixedDeltaTime;
 
-        var af_actual = Mathf.Min(af_req, m_MaxAccForward, CalculateSecondMaxAccForward(vf, vs_after_as, m_DebugDemandForwardSpeed));
+        var af_actual = af_req > 0.0f ?
+            Mathf.Min(af_req, m_MaxAccForward, CalculateSecondMaxAccForward(vf, vs_after_as, m_Engine.CurrEngineSpeed)) :
+            Mathf.Max(af_req, -m_MaxAccForward);
 
         m_Body.AddForce(m_Body.mass * as_actual * s);
         m_Body.AddForce(m_Body.mass * af_actual * f);

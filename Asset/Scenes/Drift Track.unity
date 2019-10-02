@@ -6834,16 +6834,14 @@ MonoBehaviour:
   m_MaxBrakeDcc: 10
   m_IdleDcc: 2
   m_Gears:
-  - m_TopSpeed: 0
-    m_Acc: 0
-  - m_TopSpeed: 0
-    m_Acc: 0
-  - m_TopSpeed: 0
-    m_Acc: 0
-  - m_TopSpeed: 0
-    m_Acc: 0
-  - m_TopSpeed: 0
-    m_Acc: 0
+  - m_TopSpeed: 10
+    m_TimeInGear: 1
+  - m_TopSpeed: 20
+    m_TimeInGear: 2
+  - m_TopSpeed: 30
+    m_TimeInGear: 3
+  - m_TopSpeed: 40
+    m_TimeInGear: 4
 --- !u!1 &116083941
 GameObject:
   m_ObjectHideFlags: 0

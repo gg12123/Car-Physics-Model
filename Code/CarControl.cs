@@ -12,6 +12,7 @@ public class CarControl : MonoBehaviour
 
     private SteeringControl m_Steer;
     private FrictionApplier m_Friction;
+    private Engine m_Engine;
 
     private Wheel[] m_Wheels;
     private Suspension[] m_Suspensions;
@@ -22,6 +23,7 @@ public class CarControl : MonoBehaviour
     void Awake()
     {
         m_Steer = GetComponent<SteeringControl>();
+        m_Engine = GetComponent<Engine>();
         m_Friction = GetComponent<FrictionApplier>();
         m_Suspensions = GetComponentsInChildren<Suspension>();
         m_Wheels = GetComponentsInChildren<Wheel>();
@@ -30,7 +32,11 @@ public class CarControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Demands
         m_Steer.Execute();
+        m_Engine.Execute();
+
+        // Actual
         m_Friction.Execute();
 
         for (int i = 0; i < m_Suspensions.Length; i++)
