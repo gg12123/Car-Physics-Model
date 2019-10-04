@@ -17,7 +17,7 @@ public class Suspension : MonoBehaviour
         m_Wheel = GetComponentInChildren<Wheel>();
         m_Car = GetComponentInParent<CarControl>();
         m_Body = GetComponentInParent<Rigidbody>();
-        m_UnCompressedLength = Mathf.Abs(m_Wheel.transform.localPosition.y) - m_Wheel.CalculateRadius();
+        m_UnCompressedLength = Mathf.Abs(Vector3.Dot(transform.position - m_Wheel.transform.position, transform.up)) - m_Wheel.CalculateRadius();
         CurrentSpringLength = m_UnCompressedLength;
     }
 

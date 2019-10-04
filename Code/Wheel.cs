@@ -18,7 +18,7 @@ public class Wheel : MonoBehaviour
     public void Execute()
     {
         var p = transform.localPosition;
-        transform.localPosition = new Vector3(p.x, -m_Suspension.CurrentSpringLength - Radius, p.z);
+        transform.localPosition = new Vector3(p.x, (-m_Suspension.CurrentSpringLength - Radius) / transform.parent.lossyScale.y, p.z);
     }
 
     public float CalculateRadius()
@@ -30,6 +30,6 @@ public class Wheel : MonoBehaviour
             if (v.y > maxY)
                 maxY = v.y;
         }
-        return maxY;
+        return maxY * transform.lossyScale.y;
     }
 }
