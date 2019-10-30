@@ -21,6 +21,6 @@ public class SkidMarkCreate : MonoBehaviour
     void Update()
     {
         var sideSlip = Mathf.Abs(Vector3.Dot(m_Body.GetPointVelocity(transform.position), m_Body.transform.right));
-        m_Ren.enabled = sideSlip >= m_CreateThreshold;
+        m_Ren.emitting = sideSlip >= m_CreateThreshold;
     }
 }
