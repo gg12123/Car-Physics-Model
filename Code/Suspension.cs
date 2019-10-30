@@ -36,8 +36,7 @@ public class Suspension : MonoBehaviour
 
             if (CurrentSpringLength < 0.0f)
             {
-                CurrentSpringLength = 0.0f;
-                // apply some stopping force and return?
+                Debug.LogWarning("Suspension spring length is negative!");
             }
 
             var compression = m_UnCompressedLength - CurrentSpringLength;

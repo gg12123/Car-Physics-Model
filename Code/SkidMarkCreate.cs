@@ -20,7 +20,7 @@ public class SkidMarkCreate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var sideSlip = Mathf.Abs(Vector3.Dot(m_Body.GetPointVelocity(transform.position), transform.forward));
+        var sideSlip = Mathf.Abs(Vector3.Dot(m_Body.GetPointVelocity(transform.position), m_Body.transform.right));
         m_Ren.enabled = sideSlip >= m_CreateThreshold;
     }
 }
