@@ -5,22 +5,34 @@ using UnityEngine;
 public class SteeringControl : MonoBehaviour
 {
     [SerializeField]
-    private float m_AlphaDotMax = 2.0f;
+    private float m_MaxSteeringAngle = 60.0f;
+
+    private float m_HalfCarLength;
 
     private Rigidbody m_Body;
+
+    private void CalculateHalfCarLength()
+    {
+
+    }
 
     void Awake()
     {
         m_Body = GetComponent<Rigidbody>();
+        CalculateHalfCarLength();
     }
 
     public void Execute()
     {
         var steer = GetSteer();
-        var demand = steer * m_AlphaDotMax;
+        var steerAngle = steer * m_MaxSteeringAngle * Mathf.Deg2Rad;
+
+        var sDot = m_Body.velocity.magnitude;
+        var thetaDotDemand = (sDot * Mathf.Tan(steerAngle)) / m_HalfCarLength;
+
         var actual = Vector3.Dot(m_Body.angularVelocity, transform.up);
 
-        var req_acc = (demand - actual) / Time.fixedDeltaTime;
+        var req_acc = (thetaDotDemand - actual) / Time.fixedDeltaTime;
 
         // TODO - I'm not sure if this is the correct way to use the inertia.
         // How do you get the matrix form?
