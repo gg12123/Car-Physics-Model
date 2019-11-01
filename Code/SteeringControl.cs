@@ -13,7 +13,28 @@ public class SteeringControl : MonoBehaviour
 
     private void CalculateHalfCarLength()
     {
+        var mf = GetComponentInChildren<MeshFilter>();
+        var verts = mf.mesh.vertices;
 
+        var f = transform.forward;
+
+        var min = Mathf.Infinity;
+        var max = Mathf.NegativeInfinity;
+
+        foreach (var v in verts)
+        {
+            var vWorld = mf.transform.TransformPoint(v);
+
+            var comp = Vector3.Dot(vWorld, f);
+
+            if (comp > max)
+                max = comp;
+
+            if (comp < min)
+                min = comp;
+        }
+
+        m_HalfCarLength = (max - min) / 2.0f;
     }
 
     void Awake()
